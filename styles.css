@@ -1,0 +1,627 @@
+/* styles.css - El Último Ron Game Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #2c1810, #1a0f0a);
+    color: #fff;
+    overflow: hidden;
+    height: 100vh;
+    height: 100dvh;
+    touch-action: manipulation;
+}
+
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-image: 
+        radial-gradient(circle at 30% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 70% 20%, rgba(139, 69, 19, 0.1) 0%, transparent 50%);
+    transition: filter 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-section {
+    flex: 0 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.title {
+    font-size: clamp(1rem, 3.5vw, 1.8rem);
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+    color: #D2691E;
+    margin-bottom: 5px;
+}
+
+.level-indicator {
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    color: #FFD700;
+    margin-bottom: 5px;
+}
+
+.timer {
+    font-size: clamp(1rem, 3.5vw, 1.5rem);
+    font-weight: bold;
+    color: #ff6b6b;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.middle-section {
+    flex: 1;
+    display: flex;
+    padding: 8px;
+    gap: 12px;
+}
+
+.status-bars {
+    flex: 1;
+    max-width: 180px;
+}
+
+.status-bar {
+    margin-bottom: 10px;
+}
+
+.status-label {
+    font-size: clamp(0.7rem, 2.2vw, 0.9rem);
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+
+.bar-container {
+    width: 100%;
+    height: clamp(18px, 4.5vw, 22px);
+    background: rgba(0, 0, 0, 0.5);
+    border: 2px solid #fff;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    transition: width 0.5s ease, background-color 0.3s ease;
+    border-radius: 3px;
+}
+
+.health-bar { 
+    background: linear-gradient(90deg, #ff4757, #ff6b6b); 
+}
+
+.intox-bar { 
+    background: linear-gradient(90deg, #ffa502, #ff6348); 
+}
+
+.game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.bottle-container {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.bottle {
+    width: clamp(45px, 10vw, 60px);
+    height: clamp(100px, 20vw, 140px);
+    background: linear-gradient(180deg, #8B4513, #654321);
+    border: 2px solid #D2691E;
+    border-radius: 8px 8px 4px 4px;
+    margin: 0 auto 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rum-level {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #8B0000, #A0522D);
+    transition: height 0.5s ease;
+    border-radius: 0 0 4px 4px;
+}
+
+.bottle-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(0.5rem, 1.8vw, 0.7rem);
+    color: #FFD700;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.progress-text {
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
+    color: #D2691E;
+}
+
+/* Character Sprite Styles */
+.character-container {
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-sprite {
+    width: clamp(80px, 15vw, 120px);
+    height: clamp(80px, 15vw, 120px);
+    transition: all 0.3s ease;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    transform-origin: center bottom;
+}
+
+.character-sprite.drinking { 
+    animation: drinkingAnimation 2s ease-in-out; 
+}
+
+.character-sprite.taking-pill { 
+    animation: pillAnimation 1.5s ease-in-out; 
+}
+
+.character-sprite.smoking { 
+    animation: smokeAnimation 1.8s ease-in-out; 
+}
+
+.character-sprite.snorting { 
+    animation: snortAnimation 1.2s ease-in-out; 
+}
+
+.character-sprite.vomiting { 
+    animation: vomitAnimation 2s ease-in-out; 
+}
+
+.character-sprite.eating { 
+    animation: eatAnimation 1.5s ease-in-out; 
+}
+
+.character-sprite.drinking-water { 
+    animation: waterAnimation 1.5s ease-in-out; 
+}
+
+/* Animation Keyframes */
+@keyframes drinkingAnimation {
+    0% { transform: rotate(0deg) scale(1); }
+    20% { transform: rotate(-5deg) scale(1.05); }
+    40% { transform: rotate(-10deg) scale(1.1) translateY(-5px); }
+    60% { transform: rotate(-15deg) scale(1.15) translateY(-5px); }
+    80% { transform: rotate(-10deg) scale(1.05) translateY(-3px); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+
+@keyframes pillAnimation {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.05) translateY(-3px); }
+    50% { transform: scale(1.1) rotateZ(3deg); }
+    75% { transform: scale(1.05) rotateZ(-3deg); }
+    100% { transform: scale(1); }
+}
+
+@keyframes smokeAnimation {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.03) translateY(-2px); }
+    40% { transform: scale(1.06) rotateZ(2deg); }
+    60% { transform: scale(1.06) rotateZ(-2deg); }
+    80% { transform: scale(1.03) translateY(-2px); }
+    100% { transform: scale(1); }
+}
+
+@keyframes snortAnimation {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.1) translateY(-5px) rotateZ(-8deg); }
+    60% { transform: scale(1.15) translateY(-8px) rotateZ(8deg); }
+    80% { transform: scale(1.05) translateY(-3px); }
+    100% { transform: scale(1); }
+}
+
+@keyframes vomitAnimation {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1) translateY(-3px) rotateZ(-5deg); }
+    50% { transform: scale(1.2) translateY(-8px) rotateZ(5deg); }
+    75% { transform: scale(1.15) translateY(-5px) rotateZ(-3deg); }
+    100% { transform: scale(1); }
+}
+
+@keyframes eatAnimation {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.05) translateY(-2px); }
+    50% { transform: scale(1.1) rotateZ(2deg); }
+    75% { transform: scale(1.05) rotateZ(-2deg); }
+    100% { transform: scale(1); }
+}
+
+@keyframes waterAnimation {
+    0% { transform: scale(1); }
+    20% { transform: scale(1.03) translateY(-2px); }
+    40% { transform: scale(1.06) rotateZ(2deg); }
+    60% { transform: scale(1.06) rotateZ(-2deg); }
+    80% { transform: scale(1.03) translateY(-2px); }
+    100% { transform: scale(1); }
+}
+
+.actions {
+    flex: 0 0 auto;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.action-btn {
+    padding: clamp(8px, 2.5vw, 14px);
+    font-size: clamp(0.7rem, 2vw, 0.9rem);
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    min-height: clamp(45px, 10vw, 55px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
+    position: relative;
+}
+
+.action-btn:active:not(:disabled) {
+    transform: scale(0.95);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+.action-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+.action-btn small {
+    font-size: clamp(0.5rem, 1.5vw, 0.7rem);
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.cooldown-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    font-weight: bold;
+    color: #fff;
+}
+
+.drink-btn { 
+    background: linear-gradient(45deg, #8B0000, #A0522D); 
+    color: white; 
+}
+
+.hepa-btn { 
+    background: linear-gradient(45deg, #32CD32, #228B22); 
+    color: white; 
+}
+
+.smoke-btn { 
+    background: linear-gradient(45deg, #696969, #2F4F4F); 
+    color: white; 
+}
+
+.cocaine-btn { 
+    background: linear-gradient(45deg, #F0F8FF, #E6E6FA); 
+    color: #333; 
+}
+
+.water-btn { 
+    background: linear-gradient(45deg, #4169E1, #1E90FF); 
+    color: white; 
+}
+
+.vomit-btn { 
+    background: linear-gradient(45deg, #9ACD32, #6B8E23); 
+    color: white; 
+}
+
+.food-btn { 
+    background: linear-gradient(45deg, #DEB887, #CD853F); 
+    color: white; 
+}
+
+.game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    padding: 20px;
+}
+
+.overlay-content {
+    text-align: center;
+    padding: clamp(20px, 5vw, 40px);
+    background: rgba(20, 10, 5, 0.95);
+    border: 3px solid #D2691E;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.overlay-title {
+    font-size: clamp(1.3rem, 5vw, 2.2rem);
+    margin-bottom: 15px;
+    color: #D2691E;
+}
+
+.overlay-text {
+    font-size: clamp(0.8rem, 2.5vw, 1.1rem);
+    margin-bottom: 20px;
+    line-height: 1.4;
+}
+
+.level-selector {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.level-btn {
+    padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 18px);
+    font-size: clamp(0.8rem, 2.2vw, 1rem);
+    background: linear-gradient(45deg, #8B0000, #A0522D);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.level-btn:hover, .level-btn.selected {
+    background: linear-gradient(45deg, #A0522D, #D2691E);
+    transform: scale(1.05);
+}
+
+.play-btn {
+    padding: clamp(10px, 2.5vw, 15px) clamp(18px, 4vw, 25px);
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    background: linear-gradient(45deg, #8B0000, #A0522D);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.play-btn:active {
+    transform: scale(0.95);
+}
+
+.sound-btn {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.7);
+    border: 2px solid #D2691E;
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    z-index: 100;
+}
+
+.police-overlay {
+    background: rgba(0, 0, 150, 0.9) !important;
+    animation: policeFlash 0.5s infinite;
+}
+
+@keyframes policeFlash {
+    0% { background: rgba(0, 0, 150, 0.9) !important; }
+    50% { background: rgba(150, 0, 0, 0.9) !important; }
+    100% { background: rgba(0, 0, 150, 0.9) !important; }
+}
+
+/* Lottie Animation Containers */
+.lottie-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lottie-animation {
+    width: clamp(200px, 50vw, 400px);
+    height: clamp(200px, 50vw, 400px);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.lottie-animation.active {
+    opacity: 1;
+}
+
+.lottie-drink {
+    width: clamp(150px, 40vw, 300px);
+    height: clamp(150px, 40vw, 300px);
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.lottie-vomit {
+    width: clamp(180px, 45vw, 350px);
+    height: clamp(180px, 45vw, 350px);
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.lottie-police {
+    width: clamp(250px, 60vw, 500px);
+    height: clamp(250px, 60vw, 500px);
+}
+
+.lottie-dance {
+    width: clamp(120px, 30vw, 250px);
+    height: clamp(120px, 30vw, 250px);
+    position: absolute;
+    bottom: 25%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.lottie-victory {
+    width: clamp(300px, 70vw, 600px);
+    height: clamp(300px, 70vw, 600px);
+}
+
+.lottie-defeat {
+    width: clamp(200px, 50vw, 400px);
+    height: clamp(200px, 50vw, 400px);
+}
+
+.lottie-pills {
+    width: clamp(100px, 25vw, 200px);
+    height: clamp(100px, 25vw, 200px);
+    position: absolute;
+    top: 30%;
+    right: 20%;
+}
+
+.lottie-smoke {
+    width: clamp(80px, 20vw, 160px);
+    height: clamp(80px, 20vw, 160px);
+    position: absolute;
+    top: 15%;
+    left: 20%;
+}
+
+/* Effects */
+.party-mode {
+    animation: partyColors 2s infinite;
+}
+
+@keyframes partyColors {
+    0% { filter: hue-rotate(0deg) brightness(1); }
+    25% { filter: hue-rotate(90deg) brightness(1.2); }
+    50% { filter: hue-rotate(180deg) brightness(1); }
+    75% { filter: hue-rotate(270deg) brightness(1.2); }
+    100% { filter: hue-rotate(360deg) brightness(1); }
+}
+
+.shake {
+    animation: shake 0.5s infinite;
+}
+
+.blur {
+    filter: blur(1px);
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Responsive Design */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    .middle-section {
+        flex-direction: row;
+        align-items: stretch;
+    }
+    
+    .game-area {
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .actions {
+        position: fixed;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 350px;
+        padding: 8px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .action-btn {
+        min-height: 40px;
+        padding: 6px 10px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .actions {
+        gap: 6px;
+        padding: 8px;
+    }
+    
+    .action-btn {
+        min-height: 45px;
+        padding: 6px;
+    }
+}

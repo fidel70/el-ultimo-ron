@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#2c1810">
+    <title>El Último Ron - Expandido</title>
+    
+    <!-- Lottie Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    
+    <!-- CSS Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="game-container" id="gameContainer">
+        <div class="top-section">
+            <h1 class="title">🍺 EL ÚLTIMO RON 🍺</h1>
+            <div class="level-indicator" id="levelIndicator">Nivel 1 - Principiante</div>
+            <div class="timer" id="timer">03:00</div>
+        </div>
+        
+        <div class="middle-section">
+            <div class="status-bars">
+                <div class="status-bar">
+                    <div class="status-label">❤️ Salud: <span id="healthValue">100%</span></div>
+                    <div class="bar-container">
+                        <div class="bar-fill health-bar" id="healthBar" style="width: 100%"></div>
+                    </div>
+                </div>
+                
+                <div class="status-bar">
+                    <div class="status-label">🥴 Intox: <span id="intoxValue">0%</span></div>
+                    <div class="bar-container">
+                        <div class="bar-fill intox-bar" id="intoxBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <div class="bottle-container">
+                    <div class="bottle">
+                        <div class="rum-level" id="rumLevel" style="height: 100%"></div>
+                        <div class="bottle-label">RON</div>
+                    </div>
+                    <div class="progress-text" id="progressText">🍾 100%</div>
+                </div>
+                
+                <div class="character-container">
+                    <canvas class="character-sprite" id="characterSprite" width="128" height="128"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <button class="action-btn drink-btn" id="drinkBtn">
+                🍺 Beber Ron
+                <small>+18% intox, -8% salud</small>
+            </button>
+            
+            <button class="action-btn hepa-btn" id="hepaBtn">
+                💊 Hepabionta
+                <small>-12% intox, -20% salud</small>
+            </button>
+            
+            <button class="action-btn smoke-btn" id="smokeBtn">
+                🚬 Fumar
+                <small>-3% intox, -8% salud</small>
+            </button>
+            
+            <button class="action-btn cocaine-btn" id="cocaineBtn">
+                ❄️ Cocaína
+                <small>-25% intox, -35% salud</small>
+            </button>
+            
+            <button class="action-btn water-btn" id="waterBtn">
+                🍋 Agua Limón
+                <small>-8% intox, +2% salud<br><span style="color: #FFD700;">Quedan: 12</span></small>
+            </button>
+            
+            <button class="action-btn vomit-btn" id="vomitBtn">
+                🤮 Vomitar
+                <small>-20% intox, -5 seg tiempo</small>
+            </button>
+            
+            <button class="action-btn food-btn" id="foodBtn">
+                🍳 Pan Huevo
+                <small>-10% intox, +5% salud<br><span style="color: #FFD700;">Quedan: 4</span></small>
+                <div class="cooldown-overlay hidden" id="foodCooldown">0s</div>
+            </button>
+        </div>
+        
+        <button class="sound-btn" id="soundBtn">🔊</button>
+    </div>
+    
+    <!-- Lottie Animation Overlays -->
+    <div class="lottie-overlay" id="lottieOverlay">
+        <div class="lottie-animation lottie-drink" id="drinkAnimation"></div>
+        <div class="lottie-animation lottie-vomit" id="vomitAnimation"></div>
+        <div class="lottie-animation lottie-police" id="policeAnimation"></div>
+        <div class="lottie-animation lottie-dance" id="danceAnimation"></div>
+        <div class="lottie-animation lottie-victory" id="victoryAnimation"></div>
+        <div class="lottie-animation lottie-defeat" id="defeatAnimation"></div>
+        <div class="lottie-animation lottie-pills" id="pillsAnimation"></div>
+        <div class="lottie-animation lottie-smoke" id="smokeAnimation"></div>
+    </div>
+    
+    <!-- Overlay de inicio/selector de nivel -->
+    <div class="game-overlay" id="startOverlay">
+        <div class="overlay-content">
+            <h2 class="overlay-title">🍺 EL ÚLTIMO RON 🍺</h2>
+            <p class="overlay-text">
+                Tienes que beberte toda la botella de ron antes de que se acabe el tiempo.<br><br>
+                ❤️ <strong>Tu cuerpo se regenera:</strong> +4% salud cada 8 segundos.<br>
+                🔥 <strong>ADVERTENCIA:</strong> El alcohol se acumula (+2% cada 12 seg).<br>
+                💀 La alta intoxicación (70%+) causa daño constante.<br>
+                🚓 <strong>¡CUIDADO!</strong> A 90% intoxicación la policía puede arrestarte.<br><br>
+                
+                📊 <strong>Límites por nivel:</strong><br>
+                🥇 <strong>Nivel 1:</strong> 12 agua limón, 4 pan huevo<br>
+                🥈 <strong>Nivel 2:</strong> 8 agua limón, 3 pan huevo<br>
+                🥉 <strong>Nivel 3:</strong> 5 agua limón, 1 pan huevo<br><br>
+                
+                ⚠️ <strong>Nota:</strong> No ganarás salud si tu intoxicación es 0%<br><br>
+                ¡Encuentra el equilibrio perfecto para sobrevivir!
+            </p>
+            
+            <div class="level-selector">
+                <button class="level-btn selected" data-level="1">Nivel 1<br><small>Fácil</small></button>
+                <button class="level-btn" data-level="2">Nivel 2<br><small>Medio</small></button>
+                <button class="level-btn" data-level="3">Nivel 3<br><small>Difícil</small></button>
+            </div>
+            
+            <button class="play-btn" id="startBtn">COMENZAR PARTIDA</button>
+        </div>
+    </div>
+    
+    <!-- Overlay de fin de juego -->
+    <div class="game-overlay hidden" id="endOverlay">
+        <div class="overlay-content">
+            <h2 class="overlay-title" id="endTitle">GAME OVER</h2>
+            <p class="overlay-text" id="endMessage">¡Inténtalo de nuevo!</p>
+            <button class="play-btn" id="restartBtn">JUGAR DE NUEVO</button>
+        </div>
+    </div>
+
+    <!-- Overlay de la policía -->
+    <div class="game-overlay hidden police-overlay" id="policeOverlay">
+        <div class="overlay-content">
+            <h2 class="overlay-title" style="color: #FFD700;">🚓 ¡ARRESTADO!</h2>
+            <p class="overlay-text">
+                La policía te ha arrestado por borrachera en la vía pública.<br><br>
+                💀 <strong>Nivel de intoxicación:</strong> <span id="policeIntoxLevel">0%</span><br>
+                ⚖️ Has sido multado y llevado a la comisaría.<br><br>
+                <em>"Oficial, solo estaba tomando un poquito..."</em>
+            </p>
+            <button class="play-btn" id="policeRestartBtn">INTENTAR DE NUEVO</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Game Logic -->
+    <script src="game.js"></script>
+</body>
+</html>
